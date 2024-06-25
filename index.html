@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <h1>Test thing</h1>
+  </head>
+  <body>
+    <b>Enter Username:</b>
+    <label id="setname"></label>
+    <input type="text" id="uname">
+    <button id="connectButton">Connect</button>
+  </body>
+  <script>
+    const WebsocketURL = "ws://client.fe2.io:8081/"
+    const connectButton = document.getElementById("connectButton")
+    const setname = document.getElementById("uname")
+    connectButton.addEventListener("click", function(e) {
+      const ws = new WebSocket(WebsocketURL);
+      const pName = setname.value
+      ws.addEventListener("open", () => {
+        console.log("Connection Established");
+        ws.send(pName);
+      })
+      ws.addEventListener("message", (e) => {
+        var data = JSON.parse(e.data);
+        console.log(data);
+        console.log(e);
+      })
+    })
+  </script>
+</html>
